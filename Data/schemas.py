@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import BaseModel
 
 # --------------------------------------------------------------------------
@@ -21,15 +22,14 @@ class Video(VideoBase):
 # --------------------------------------------------------------------------
 class TutorialBase(BaseModel):
     name: str
-    level: str
-    creator: int
+    level: int
 
 class TutorialCreate(TutorialBase):
-    pass
+    description: str | None = None
 
 class Tutorial(TutorialBase):
-    description: str | None = None
     id: int
+    creator: int
     topic_id: int
 
     class Confi:
@@ -85,7 +85,6 @@ class Vote(VoteBase):
 # --------------------------------------------------------------------------
 class UserBase(BaseModel):
     identification: str
-    acces_level: int
 
 class UserCreate(UserBase):
     hashed_password: str
@@ -93,6 +92,7 @@ class UserCreate(UserBase):
 class User(UserBase):
     id: int
     is_active: bool
+    acces_level: Optional[int] = 0
 
     class Config:
         orm_mode = True
