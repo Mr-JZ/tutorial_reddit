@@ -34,28 +34,15 @@ def create_user(db: Session, user: schemas.UserCreate):
 def get_tutorial(db: Session, tutorial_id: int):
     return db.query(models.Tutorial).filter(models.Tutorial.id == tutorial_id).first()
 
-def get_tutorial_by_name(db: Session, name: str, level: int = None):
-    if level:
-        return db.query(models.Tutorial).filter(models.Tutorial.name == name and models.Tutorial.level == level).first()
-    return db.query(models.Tutorial).filter(models.Tutorial.name == name).first()
-
 def get_tutorials_by_name(db: Session, name: str, level: int = None, skip: int = 0, limit: int = 100):
     if level:
         return db.query(models.Tutorial).filter(models.Tutorial.name == name and models.Tutorial.level == level).offset(skip).limit(limit).all()
     return db.query(models.Tutorial).filter(models.Tutorial.name == name).offset(skip).limit(limit).all()
 
-def get_tutorial_by_topic(db: Session, topic_id: int, level: int = None):
-    if level:
-        return db.query(models.Tutorial).filter(models.Tutorial.topic_id == topic_id and models.Tutorial.level == level).first()
-    return db.query(models.Tutorial).filter(models.Tutorial.topic_id == topic_id).first()
-
 def get_tutorials_by_topic(db: Session, topic_id: int, level: int = None, skip: int = 0, limit: int = 100):
     if level:
         return db.query(models.Tutorial).filter(models.Tutorial.topic_id == topic_id and models.Tutorial.level == level).offset(skip).limit(limit).all()
     return db.query(models.Tutorial).filter(models.Tutorial.topic_id == topic_id).offset(skip).limit(limit).all()
-
-def get_tutorials_by_level(db: Session, level: int, skip: int = 0, limit: int = 100):
-    return db.query(models.Tutorial).filter(models.Tutorial.level == level).offset(skip).limit(limit).all()
 
 def get_tutorials(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Tutorial).offset(skip).limit(limit).all()
@@ -115,9 +102,6 @@ def get_topics(db: Session, skip: int = 0, limit: int = 100):
 
 def get_topic_by_name(db: Session, name: str):
     return db.query(models.Topic).filter(models.Topic.name == name).first()
-
-def get_topics_by_name(db: Session, name: str, skip: int = 0, limit: int = 100):
-    return db.query(models.Topic).filter(models.Topic.name == name).offset(skip).limit(limit).all()
 # CREATE
 def create_topic(db: Session, topic: schemas.TopicCreate):
     db_topic = models.Topic(**topic.dict())
@@ -136,6 +120,9 @@ def create_topic(db: Session, topic: schemas.TopicCreate):
 # GET
 def get_vote(db: Session, vote_id: int = 0):
     return db.query(models.Vote).filter(models.Vote.id == vote_id).first()
+
+def get_vote_by_user_and_tutorial_id(db: Session, user_id: int, tutorial_id:int):
+    return db.query(models.Vote).filter(models.Vote.user_id == user_id and models.Vote.tutorial_id == tutorial_id).first()
 
 def get_votes(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Vote).offset(skip).limit(limit).all()
