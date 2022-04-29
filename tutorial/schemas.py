@@ -23,6 +23,7 @@ class Video(VideoBase):
 class TutorialBase(BaseModel):
     name: str
     level: int
+    topic_id: int
 
 class TutorialCreate(TutorialBase):
     description: str | None = None
@@ -30,7 +31,7 @@ class TutorialCreate(TutorialBase):
 class Tutorial(TutorialBase):
     id: int
     creator: int
-    topic_id: int
+    user_id : int
 
     class Confi:
         orm_mode = True
@@ -61,6 +62,7 @@ class TopicCreate(TopicBase):
 
 class Topic(TopicBase):
     id: int
+    user_id : int
 
     class Config:
         orm_mode =True
@@ -87,7 +89,7 @@ class UserBase(BaseModel):
     identification: str
 
 class UserCreate(UserBase):
-    hashed_password: str
+    password: str
 
 class User(UserBase):
     id: int
@@ -96,3 +98,14 @@ class User(UserBase):
 
     class Config:
         orm_mode = True
+
+# --------------------------------------------------------------------------
+# Token
+# --------------------------------------------------------------------------
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    user_identification: str

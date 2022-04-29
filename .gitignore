@@ -1,3 +1,4 @@
 .idea/
 *.db
-Data/__pycache__/
+tutorial/__pycache__/
+__pycache__/
