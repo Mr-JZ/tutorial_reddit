@@ -39,15 +39,14 @@ class Tutorial(TutorialBase):
 # VIDEO <-> Tutorial
 # --------------------------------------------------------------------------
 class Video_TutorialBase(BaseModel):
-    pass
+    video_id: int
+    tutorial_id: int
 
 class Video_TutorialCreate(Video_TutorialBase):
-    pass
+    order: int
 
 class Video_Tutorial(Video_TutorialBase):
     id: int
-    video_id: int
-    tutorial_id: int
 
     class Config:
         orm_mode = True

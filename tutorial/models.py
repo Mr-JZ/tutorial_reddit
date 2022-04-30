@@ -16,6 +16,7 @@ class Videos_Tutorial(Base):
     __tablename__ = "videos_tutorial"
     id = Column(Integer, primary_key=True, index=True)
 
+    order = Column(Integer)
     video_id = Column(Integer, ForeignKey("video.id"))
     tutorial_id = Column(Integer, ForeignKey("tutorial.id"))
 
