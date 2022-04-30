@@ -1,4 +1,4 @@
 .idea/
 *.db
-tutorial/__pycache__/
-__pycache__/
+*.json
+__pycache__
