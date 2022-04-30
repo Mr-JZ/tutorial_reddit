@@ -25,5 +25,18 @@ def create_video(db: Session, video: schemas.VideoCreate):
     db.refresh(db_video)
     return db_video
 # UPDATE
+def update_video(db: Session, video_id: int, video: schemas.VideoCreate):
+    db_video = get_video(db, video_id=video_id)
+    if video.name:
+        db_video.name = video.name
+    if video.url:
+        db_video.url = video.url
+    db.commit()
+    db.refresh(db_video)
+    return db_video
+
 # DELETE
+def delete_video(db: Session, video_id: int):
+    get_video(db, video_id).delete(synchronize_session=False)
+    db.commit()
 

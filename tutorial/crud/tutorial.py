@@ -20,7 +20,7 @@ def get_tutorials(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Tutorial).offset(skip).limit(limit).all()
 # CREATE
 def create_tutorial(db: Session, tutorial: schemas.TutorialCreate, user_id: int):
-    db_tutorial =  models.Tutorial(**tutorial.dict(), creator = user_id)
+    db_tutorial =  models.Tutorial(**tutorial.dict(), creator=user_id)
     db.add(db_tutorial)
     db.commit()
     db.refresh(db_tutorial)
@@ -43,5 +43,5 @@ def update_tutorial(db: Session, tutorial_id: int, tutorial: Optional[schemas.Tu
 
 # DELETE
 def delete_tutorial(db: Session, tutorial_id: int):
-    get_tutorial(db, tutorial_id=id).delete(synchronize_session=False)
+    get_tutorial(db, tutorial_id=tutorial_id).delete(synchronize_session=False)
     db.commit()

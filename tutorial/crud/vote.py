@@ -25,4 +25,13 @@ def create_vote(db: Session, vote: schemas.VoteCreate, user_id: int, tutorial_id
     db.refresh(db_vote)
     return db_vote
 # UPDATE
+def update_vote(db: Session, vote_id: int):
+    db_vote = get_vote(db, vote_id=vote_id)
+    db_vote.up = not db_vote.up
+    db.commit()
+    db.refresh(db_vote)
+    return db_vote
 # DELETE
+def vote_vote(db: Session, vote_id: int):
+    get_vote(db, vote_id=vote_id).vote(synchronize_session=False)
+    db.commit()

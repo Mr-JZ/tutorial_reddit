@@ -20,4 +20,14 @@ def create_topic(db: Session, topic: schemas.TopicCreate, user_id: int):
     return db_topic
 
 # UPDATE
+def update_topic(db: Session, topic_id: int, topic: schemas.TopicCreate):
+    db_topic = get_topic(db, topic_id=topic_id)
+    db_topic.name = topic.name
+    db.commit()
+    db.refresh(db_topic)
+    return db_topic
+
 # DELETE
+def delete_topic(db: Session, topic_id: int):
+    get_topic(db, topic_id=topic_id).delete(synchronize_session=False)
+    db.commit()

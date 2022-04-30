@@ -21,4 +21,18 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.refresh(db_user)
     return db_user
 # UPDATE
+def update_user(db: Session, user_id: int, user:schemas.UserCreate):
+    db_user = get_user(db, id=user_id)
+    if user.password:
+        password = Hash.bcrypt(user.password)
+        db_user.password = password
+    if user.identification:
+        db_user.identification = user.identification
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
 # DELETE
+def delete_user(db: Session, user_id: int):
+    get_user(db, id=user_id).delete(synchronize_session=False)
+    db.commit()
