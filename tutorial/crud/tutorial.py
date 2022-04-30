@@ -45,3 +45,18 @@ def update_tutorial(db: Session, tutorial_id: int, tutorial: Optional[schemas.Tu
 def delete_tutorial(db: Session, tutorial_id: int):
     get_tutorial(db, tutorial_id=tutorial_id).delete(synchronize_session=False)
     db.commit()
+
+# Video adding
+def add_video(db: Session, tutrial_id: int, video_id: int):
+    db_video_tutorial = models.Videos_Tutorial(video_id=video_id, tutrial_id=tutrial_id)
+    db.add(db_video_tutorial)
+    db.commit()
+    db.refresh(db_video_tutorial)
+    return db_video_tutorial
+
+def get_videos(db: Session, tutorial_id: int, skip: int, limit: int):
+    return db.query(models.Videos_Tutorial).filter(models.Videos_Tutorial.tutorial_id == tutorial_id).offset(skip).limit(limit).all()
+
+def delete_video(db: Session, videos_tutorial_id: int):
+    db.query(models.Videos_Tutorial).filter(models.Videos_Tutorial.id == videos_tutorial_id).first().delete(synchronize_session=False)
+    db.commit()
