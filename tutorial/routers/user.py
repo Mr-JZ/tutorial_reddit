@@ -16,14 +16,14 @@ def create_user(user_schema: schemas.UserCreate, db: Session = Depends(database.
         raise HTTPException(status_code=400, detail="Identification already exist")
     return user.create_user(db=db, user=user_schema)
 
-@router.get("/", response_model=list[schemas.User])
+@router.get("/list/", response_model=list[schemas.UserShow])
 def read_users(skip: Optional[int] = 0, limit: Optional[int] = 100, db: Session = Depends(database.get_db)):
     users = user.get_users(db, skip=skip, limit=limit)
     return users
 
-
 @router.get("/", response_model=schemas.User)
-def read_user(id: Optional[int] = None, identification: Optional[str] = None, db: Session = Depends(database.get_db)):
+def read_user(id: Optional[int] = None, identification: Optional[str] = None, db: Session = Depends(database.get_db),
+              current_user: schemas.User = Depends(oauth2.get_current_user)):
     if id:
         db_user = user.get_user(db, id=id)
     elif identification:

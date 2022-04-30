@@ -3,12 +3,18 @@ from jose import JWTError, jwt
 from tutorial import schemas
 import tutorial.crud.user as user
 from sqlalchemy.orm import Session
+import json
+
+
+with open("./secret.json") as file:
+    security = json.load(file)
+
 
 # to get a string like this run:
-# openssl rand -hex 32
-SECRET_KEY = "0d93fb65c44b928773737e903db351aa169e7b7963f93ffe0f84534487fdc3c365c607d1f91b1da1d29523b7a547b77e194f0bf715ba309087339cd4efb32270"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+# openssl rand -hex 32 and put it into the secret.json file
+SECRET_KEY = security.get("secret_key")
+ALGORITHM = security.get("algorithm")
+ACCESS_TOKEN_EXPIRE_MINUTES = security.get("acces_token_expire_minutes")
 
 def create_access_token(data: dict):
     to_encode = data.copy()
