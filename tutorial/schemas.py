@@ -99,6 +99,10 @@ class User(UserBase):
     class Config:
         orm_mode = True
 
+class UserShow(UserBase):
+    is_active: bool
+    acces_level: Optional[int] = 0
+
 # --------------------------------------------------------------------------
 # Token
 # --------------------------------------------------------------------------
