@@ -3,6 +3,7 @@ from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
 from tutorial.crud import topic
 from tutorial import schemas, models, oauth2, database
+from tutorial.user_role import Role
 
 router = APIRouter(
     prefix="/topic",
@@ -36,3 +37,16 @@ def read_topics(skip: int, limit: int, db: Session = Depends(database.get_db)):
     if db_topics is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="This topics don't exist")
     return db_topics
+
+@router.delete("/")
+def delete_topic(topic_id: int, db: Session = Depends(database.get_db), current_user: schemas.User = Depends(oauth2.get_current_user)):
+    topic_db = topic.get_topic(db, topic_id=topic_id)
+    if topic_db is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="This topic don't exist")
+    elif topic_db.user_id == current_user.id or current_user.acces_level == Role().ADMIN:
+        topic.delete_topic(db, topic_id=topic_id)
+
+@router.put("/")
+def update_topic(db: Session = Depends(database.get_db), current_user: schemas.User = Depends(oauth2.get_current_user)):
+    # TODO: add update topic
+    pass

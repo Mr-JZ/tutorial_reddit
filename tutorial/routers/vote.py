@@ -3,6 +3,7 @@ from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
 from tutorial.crud import vote as crud
 from tutorial import schemas, models, oauth2, crud, database
+from tutorial.user_role import Role
 
 tutorial_id: int = 0
 
@@ -63,3 +64,17 @@ def read_votes(skip: Optional[int] = 0, limit: Optional[int] = 100, user_id: Opt
     if db_votes is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No return from database")
     return db_votes
+
+@router.delete("/")
+def delete_vote(vote_id: int, db: Session = Depends(database.get_db), current_user: schemas.User = Depends(oauth2.get_current_user)):
+    db_vote = crud.get_vote(db, vote_id=vote_id)
+    if db_vote is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="The vote doesn't exist")
+    elif db_vote.user_id == current_user.id or current_user.acces_level == Role().ADMIN:
+        crud.delete_vote(db, vote_id=vote_id)
+
+
+@router.put("/")
+def update_vote(db: Session = Depends(database.get_db), current_user: schemas.User = Depends(oauth2.get_current_user)):
+    # TODO: add update function
+    pass

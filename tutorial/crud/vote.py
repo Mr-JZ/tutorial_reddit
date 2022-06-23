@@ -32,6 +32,6 @@ def update_vote(db: Session, vote_id: int):
     db.refresh(db_vote)
     return db_vote
 # DELETE
-def vote_vote(db: Session, vote_id: int):
+def delete_vote(db: Session, vote_id: int):
     get_vote(db, vote_id=vote_id).vote(synchronize_session=False)
     db.commit()

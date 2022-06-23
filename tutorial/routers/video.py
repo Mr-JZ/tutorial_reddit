@@ -3,6 +3,7 @@ from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
 from tutorial.crud import video as crud
 from tutorial import schemas, models, oauth2, crud, database
+from tutorial.user_role import Role
 
 router = APIRouter(
     prefix="/video",
@@ -25,10 +26,8 @@ def read_video(id: Optional[int] = None, url: Optional[str] = None, name: Option
         db_video = crud.get_video_by_url(db, url=url)
     elif name:
         db_video = crud.get_video_by_name(db, name=name)
-    else:
-        pass
     if db_video is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Video not found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="The video doesn't exist")
     return db_video
 
 
@@ -41,3 +40,16 @@ def read_videos(skip: Optional[int] = 0, limit: Optional[int] = 100, name: Optio
     if db_videos is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Videos not found")
     return db_videos
+
+@router.delete("/")
+def delete_video(video_id: int, db: Session = Depends(database.get_db), current_user: schemas.User = Depends(oauth2.get_current_user)):
+    db_video = crud.get_video(db, video_id=video_id)
+    if db_video is None:
+        pass
+    elif current_user.acces_level >= Role().MODERATOR:
+        crud.delete_video(db, db_video.id)
+
+@router.put("/")
+def update_video(db: Session = Depends(database.get_db), current_user: schemas.User = Depends(oauth2.get_current_user)):
+    # TODO: add update function
+    pass

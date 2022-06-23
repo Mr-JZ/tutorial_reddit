@@ -37,6 +37,6 @@ def update_video(db: Session, video_id: int, video: schemas.VideoCreate):
 
 # DELETE
 def delete_video(db: Session, video_id: int):
-    get_video(db, video_id).delete(synchronize_session=False)
+    models.Video.query.get_video(db, video_id).delete(synchronize_session=False)
     db.commit()
 
