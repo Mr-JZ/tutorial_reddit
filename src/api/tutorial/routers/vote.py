@@ -1,9 +1,9 @@
 from typing import Optional
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
-from src.api.tutorial.crud import vote as crud
-from src.api.tutorial import database, oauth2, schemas, crud
-from src.api.tutorial.user_role import Role
+from api.tutorial.crud import vote as crud
+from api.tutorial import database, oauth2, schemas, crud
+from api.tutorial.user_role import Role
 
 tutorial_id: int = 0
 

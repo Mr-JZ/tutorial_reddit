@@ -1,5 +1,4 @@
-from typing import List, Optional
-from fastapi import APIRouter, Depends, status, HTTPException
+from fastapi import APIRouter, status
 
 router = APIRouter(
     prefix="",

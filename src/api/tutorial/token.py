@@ -7,8 +7,7 @@ import json
 import os
 
 
-with open(os.path.join(os.getenv("SECRETE"), "tutorial_reddit_secret.json")) as file:
-    security = json.load(file)
+security = json.loads(os.getenv("TUTORIAL_REDDIT_SECRET"))
 
 
 # to get a string like this run:

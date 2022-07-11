@@ -1,8 +1,8 @@
 from typing import List, Optional
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
-from src.api.tutorial.crud import tutorial as crud
-from src.api.tutorial import database, oauth2, schemas
+from api.tutorial.crud import tutorial as crud
+from api.tutorial import database, oauth2, schemas
 
 router = APIRouter(
     prefix="/tutorial",
