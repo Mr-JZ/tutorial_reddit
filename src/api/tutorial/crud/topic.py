@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from .. import models, schemas
+from api.tutorial import models, schemas
 
 # GET
 def get_topic(db: Session, topic_id: id):

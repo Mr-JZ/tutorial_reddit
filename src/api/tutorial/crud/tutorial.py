@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from typing import Optional
-from .. import models, schemas
+from api.tutorial import models, schemas
 
 # GET
 def get_tutorial(db: Session, tutorial_id: int):

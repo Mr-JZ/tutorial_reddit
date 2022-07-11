@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from .. import models, schemas
+from api.tutorial import models, schemas
 
 # GET
 def get_vote(db: Session, vote_id: int = 0):

@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from .. import models, schemas
+from api.tutorial import models, schemas
 from src.api.tutorial.hashing import Hash
 
 # GET

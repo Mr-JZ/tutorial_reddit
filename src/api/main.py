@@ -1,9 +1,9 @@
 from fastapi import FastAPI
-from src.api.tutorial import  models
-from src.api.tutorial import engine
+from api.tutorial import  models
+from api.tutorial.database import engine
 from mangum import Mangum
-from src.api.tutorial import tutorial, user, authentication, vote
-from src.api.tutorial.routers import video, topic, web_tutorial
+from api.tutorial.routers import tutorial, user, authentication, vote
+from api.tutorial.routers import video, topic, web_tutorial
 
 app = FastAPI()
 
