@@ -8,12 +8,14 @@ def get_tutorial(db: Session, tutorial_id: int):
 
 def get_tutorials_by_name(db: Session, name: str, level: int = None, skip: int = 0, limit: int = 100):
     if level:
-        return db.query(models.Tutorial).filter(models.Tutorial.name == name and models.Tutorial.level == level).offset(skip).limit(limit).all()
+        return db.query(models.Tutorial).filter(
+            models.Tutorial.name == name and models.Tutorial.level == level).offset(skip).limit(limit).all()
     return db.query(models.Tutorial).filter(models.Tutorial.name == name).offset(skip).limit(limit).all()
 
 def get_tutorials_by_topic(db: Session, topic_id: int, level: int = None, skip: int = 0, limit: int = 100):
     if level:
-        return db.query(models.Tutorial).filter(models.Tutorial.topic_id == topic_id and models.Tutorial.level == level).offset(skip).limit(limit).all()
+        return db.query(models.Tutorial).filter(
+            models.Tutorial.topic_id == topic_id and models.Tutorial.level == level).offset(skip).limit(limit).all()
     return db.query(models.Tutorial).filter(models.Tutorial.topic_id == topic_id).offset(skip).limit(limit).all()
 
 def get_tutorials(db: Session, skip: int = 0, limit: int = 100):
@@ -62,7 +64,8 @@ def update_video_order(db: Session, tutorial_id: int, video_id: int, order):
     return db_video_tutorial
 
 def get_videos(db: Session, tutorial_id: int, skip: int, limit: int):
-    return db.query(models.Videos_Tutorial).filter(models.Videos_Tutorial.tutorial_id == tutorial_id).offset(skip).limit(limit).all()
+    return db.query(models.Videos_Tutorial).filter(
+        models.Videos_Tutorial.tutorial_id == tutorial_id).offset(skip).limit(limit).all()
 
 def delete_video(db: Session, tutorial_id: int, video_id: int):
     get_video_tutorial(db, tutorial_id=tutorial_id, video_id=video_id).delete(synchronize_session=False)

@@ -1,5 +1,4 @@
 from sqlalchemy.orm import Session
-from typing import Optional
 from .. import models, schemas
 
 # GET
@@ -29,5 +28,5 @@ def update_topic(db: Session, topic_id: int, topic: schemas.TopicCreate):
 
 # DELETE
 def delete_topic(db: Session, topic_id: int):
-    get_topic(db, topic_id=topic_id).delete(synchronize_session=False)
+    db.query(models.Topic).filter(models.Topic.id == id).delete()
     db.commit()

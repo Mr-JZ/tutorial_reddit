@@ -1,9 +1,9 @@
 from typing import List, Optional
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
-from tutorial.crud import user
-from tutorial import schemas, models, oauth2, crud, database
-from tutorial.user_role import Role
+from src.api.tutorial.crud import user
+from src.api.tutorial import database, oauth2, schemas
+from src.api.tutorial.user_role import Role
 
 router = APIRouter(
     prefix="/user",
@@ -36,7 +36,8 @@ def read_user(id: Optional[int] = None, identification: Optional[str] = None, db
     return db_user
 
 @router.delete("/")
-def delete_user(user_id: int, db: Session = Depends(database.get_db), current_user: schemas.User = Depends(oauth2.get_current_user)):
+def delete_user(user_id: int, db: Session = Depends(database.get_db), current_user: schemas.User = Depends(
+    oauth2.get_current_user)):
     db_user = user.get_user(db, id=user_id)
     if db_user is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="The User doesn't exist")

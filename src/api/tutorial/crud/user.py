@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
-from typing import Optional
 from .. import models, schemas
-from tutorial.hashing import Hash
+from src.api.tutorial.hashing import Hash
 
 # GET
 def get_user(db: Session, id: int):
@@ -21,7 +20,7 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.refresh(db_user)
     return db_user
 # UPDATE
-def update_user(db: Session, user_id: int, user:schemas.UserCreate):
+def update_user(db: Session, user_id: int, user: schemas.UserCreate):
     db_user = get_user(db, id=user_id)
     if user.password:
         password = Hash.bcrypt(user.password)

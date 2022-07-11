@@ -1,5 +1,4 @@
 from sqlalchemy.orm import Session
-from typing import Optional
 from .. import models, schemas
 
 # GET
@@ -7,7 +6,8 @@ def get_vote(db: Session, vote_id: int = 0):
     return db.query(models.Vote).filter(models.Vote.id == vote_id).first()
 
 def get_vote_by_user_and_tutorial_id(db: Session, user_id: int, tutorial_id:int):
-    return db.query(models.Vote).filter(models.Vote.user_id == user_id and models.Vote.tutorial_id == tutorial_id).first()
+    return db.query(models.Vote).filter(
+        models.Vote.user_id == user_id and models.Vote.tutorial_id == tutorial_id).first()
 
 def get_votes(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Vote).offset(skip).limit(limit).all()
@@ -33,5 +33,5 @@ def update_vote(db: Session, vote_id: int):
     return db_vote
 # DELETE
 def delete_vote(db: Session, vote_id: int):
-    get_vote(db, vote_id=vote_id).vote(synchronize_session=False)
+    db.query(models.Vote).filter(models.Vote.id == id).delete()
     db.commit()

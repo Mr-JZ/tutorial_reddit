@@ -1,8 +1,8 @@
 from typing import List, Optional
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
-from tutorial.crud import tutorial as crud
-from tutorial import schemas, models, oauth2, database
+from src.api.tutorial.crud import tutorial as crud
+from src.api.tutorial import database, oauth2, schemas
 
 router = APIRouter(
     prefix="/tutorial",
@@ -19,7 +19,7 @@ def delete_tutorial(id: int, db: Session = Depends(database.get_db),
                     current_user: schemas.User = Depends(oauth2.get_current_user)):
     crud.delete_tutorial(db, tutorial_id=id)
 
-@router.put("/", response_model=schemas.Tutorial ,status_code=status.HTTP_202_ACCEPTED)
+@router.put("/", response_model=schemas.Tutorial , status_code=status.HTTP_202_ACCEPTED)
 def update_tutorial(id: int, tutorial_schema: Optional[schemas.TutorialCreate], db: Session = Depends(database.get_db),
                     current_user: schemas.User = Depends(oauth2.get_current_user)):
     db_tutorial = crud.get_tutorial(db, tutorial_id=id)

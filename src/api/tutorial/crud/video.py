@@ -1,5 +1,4 @@
 from sqlalchemy.orm import Session
-from typing import Optional
 from .. import models, schemas
 
 # GET
@@ -37,6 +36,6 @@ def update_video(db: Session, video_id: int, video: schemas.VideoCreate):
 
 # DELETE
 def delete_video(db: Session, video_id: int):
-    models.Video.query.get_video(db, video_id).delete(synchronize_session=False)
+    db.query(models.Video).filter(models.Video.id == id).delete()
     db.commit()
 

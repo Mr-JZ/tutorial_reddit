@@ -1,12 +1,13 @@
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
-from tutorial import schemas
-import tutorial.crud.user as user
+from src.api.tutorial import schemas
+import src.api.tutorial.crud.user as user
 from sqlalchemy.orm import Session
 import json
+import os
 
 
-with open("./secret.json") as file:
+with open(os.path.join(os.getenv("SECRETE"), "tutorial_reddit_secret.json")) as file:
     security = json.load(file)
 
 

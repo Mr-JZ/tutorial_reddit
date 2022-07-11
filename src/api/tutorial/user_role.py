@@ -1,8 +1,10 @@
 import json
+import os.path
+
 
 class Role:
     def __init__(self):
-        with open("./role.json") as file:
+        with open(os.path.join(os.getenv("SECRETE"), "tutorial_reddit_role.json")) as file:
             self.role = json.load(file)
         self.USER = self.role.get("user")
         self.TESTER = self.role.get("tester")
@@ -14,4 +16,3 @@ class Role:
         role_int = self.role.get(role)
         if role_int:
             return role_int
-
