@@ -34,8 +34,8 @@ jobs:
             ${{ runner.os }}-venv-
 
       - name: set system var
-        run: export TUTORIAL_REDDIT_ROLE=${{ secrets.TUTORIAL_REDDIT_ROLE }} &&
-            export TUTORIAL_REDDIT_SECRET=${{ secrets.TUTORIAL_REDDIT_SECRET }}
+        run: export TUTORIAL_REDDIT_ROLE="${{ secrets.TUTORIAL_REDDIT_ROLE }}" &&
+            export TUTORIAL_REDDIT_SECRET="${{ secrets.TUTORIAL_REDDIT_SECRET }}"
       # Step 5
       - name: Activate and Install Depencies into Virtual env
         run: python -m venv venv && source venv/bin/activate
