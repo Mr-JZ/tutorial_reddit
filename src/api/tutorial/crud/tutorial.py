@@ -45,7 +45,7 @@ def update_tutorial(db: Session, tutorial_id: int, tutorial: Optional[schemas.Tu
 
 # DELETE
 def delete_tutorial(db: Session, tutorial_id: int):
-    get_tutorial(db, tutorial_id=tutorial_id).delete(synchronize_session=False)
+    db.query(models.Tutorial).filter(models.Tutorial.id == tutorial_id).delete()
     db.commit()
 
 # Video adding
@@ -68,7 +68,7 @@ def get_videos(db: Session, tutorial_id: int, skip: int, limit: int):
         models.Videos_Tutorial.tutorial_id == tutorial_id).offset(skip).limit(limit).all()
 
 def delete_video(db: Session, tutorial_id: int, video_id: int):
-    get_video_tutorial(db, tutorial_id=tutorial_id, video_id=video_id).delete(synchronize_session=False)
+    db.query(models.Videos_Tutorial).filter(models.Videos_Tutorial.video_id == video_id and models.Videos_Tutorial.tutorial_id == tutorial_id).delete(synchronize_session=False)
     db.commit()
 
 def get_video_tutorial(db: Session, tutorial_id: int, video_id: int):

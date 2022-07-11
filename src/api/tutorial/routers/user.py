@@ -42,7 +42,7 @@ def delete_user(user_id: int, db: Session = Depends(database.get_db), current_us
     if db_user is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="The User doesn't exist")
     elif db_user.id == current_user.id or current_user.acces_level == Role().ADMIN:
-        user.delete_user(db, user_id=user_id)
+        return user.delete_user(db, user_id=user_id)
 
 @router.put("/")
 def update_user(db: Session = Depends(database.get_db), current_user: schemas.User = Depends(oauth2.get_current_user)):
