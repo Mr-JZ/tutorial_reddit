@@ -34,6 +34,13 @@ We use the pricipal to up and down vote a post that is one or multiple videos in
 ## Docker 
 
 to build the image run in the project folder
-```docker build -t tutorial_reddit .```
+
+```
+docker build -t tutorial_reddit .
+```
+
 if you want to run the container implement the resources from the api into the docker container. You have to change in the resouce folder before you can run the command belowe.
-```docker run -d --name tutred -p 7000:7000 --env "TUTORIAL_REDDIT_SECRET=$(<./secrets.json)" --env "TUTORIAL_REDDIT_ROLE=$(<./role.json)" tutorial_reddit```
+
+```
+docker run -d --name tutred -p 7000:7000 --env "TUTORIAL_REDDIT_SECRET=$(<./secrets.json)" --env "TUTORIAL_REDDIT_ROLE=$(<./role.json)" tutorial_reddit
+```
