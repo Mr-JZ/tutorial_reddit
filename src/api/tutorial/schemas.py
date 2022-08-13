@@ -10,6 +10,10 @@ class VideoBase(BaseModel):
 
 class VideoCreate(VideoBase):
     pass
+class VideoUpdate(BaseModel):
+    name: str
+    url: str
+
 
 class Video(VideoBase):
     id: int
@@ -27,6 +31,12 @@ class TutorialBase(BaseModel):
 
 class TutorialCreate(TutorialBase):
     description: str | None = None
+
+# TODO check if the erber klasse richtig ist
+class TutorialUpdate(BaseModel):
+    name: str
+    level: int
+    topic_id: int
 
 class Tutorial(TutorialBase):
     id: int
@@ -59,6 +69,8 @@ class TopicBase(BaseModel):
 class TopicCreate(TopicBase):
     pass
 
+class TopicUpdate(BaseModel):
+    name: str
 class Topic(TopicBase):
     id: int
     user_id : int
@@ -74,6 +86,8 @@ class VoteBase(BaseModel):
 class VoteCreate(VoteBase):
     pass
 
+class VoteUpdate(BaseModel):
+    up: bool
 class Vote(VoteBase):
     id: int
     tutorial_id: int
@@ -88,6 +102,10 @@ class UserBase(BaseModel):
     identification: str
 
 class UserCreate(UserBase):
+    password: str
+
+class UserUpdate(BaseModel):
+    identification: str
     password: str
 
 class User(UserBase):
