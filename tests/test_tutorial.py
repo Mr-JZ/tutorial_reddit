@@ -10,26 +10,23 @@ client = TestClient(app)
 
 app.name: str = "janzi"
 app.password: str = "test"
-app.id: int = 0
+app.token: str = test_user.test_login()
+app.id : int = 0
 
 
 @pytest.mark.parametrize("json_input,expected", [
     ({"name": "test tutorial", "level": 0, "topic_id": 0, "description": "This is a smal test"}, status.HTTP_200_OK)
 ])
-def test_create(json_input, expected, login_token):
-    response = client.post("/tutorial/", headers={"Authorization": f"Bearer {login_token.__await__()}"}, json=json_input)
+def test_create(json_input, expected):
+    response = client.post("/tutorial/", headers={"Authorization": f"Bearer {app.token}"}, params=json_input)
     print(response.json())
-    response_json = response.json()
-    app.id = response_json.get("id")
+    app.id = response.json().get("id")
     assert response.status_code == expected
 
 
-def test_search_identity(login_token):
-    response = client.get(f"/user/?identification={app.name}")
-    assert response.status_code == status.HTTP_401_UNAUTHORIZED
-    response = client.get(f"/user/?identification={app.name}", headers={"Authorization": f"Bearer {login_token}"})
-    assert response.status_code == status.HTTP_200_OK
-    app.id = response.json().get("id")
+def test_get():
+    response = client.get(f"/tutorial?id=1")
+    print(response.json())
 
 
 def test_search_id(login_token):

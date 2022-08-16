@@ -1,10 +1,11 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from typing import Optional
 from api.tutorial import models, schemas
 
 # GET
 def get_tutorial(db: Session, tutorial_id: int):
-    return db.query(models.Tutorial).filter(models.Tutorial.id == tutorial_id).first()
+    return db.query(models.Tutorial)\
+        .filter(models.Tutorial.id == tutorial_id).first()
 
 def get_tutorials_by_name(db: Session, name: str, level: int = None, skip: int = 0, limit: int = 100):
     if level:

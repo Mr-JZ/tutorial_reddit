@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from api.tutorial import models, schemas
-from src.api.tutorial.hashing import Hash
+from api.tutorial.hashing import Hash
 
 # GET
 def get_user(db: Session, id: int):

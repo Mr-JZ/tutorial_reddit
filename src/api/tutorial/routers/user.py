@@ -2,8 +2,9 @@ from typing import List, Optional
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
 from api.tutorial.crud import user
-from api.tutorial import database, oauth2, schemas
+from api.tutorial import database, oauth2, schemas, models
 from api.tutorial.user_role import Role
+from api.tutorial.hashing import Hash
 
 router = APIRouter(
     prefix="/user",
@@ -45,6 +46,17 @@ def delete_user(user_id: int, db: Session = Depends(database.get_db), current_us
         return user.delete_user(db, user_id=user_id)
 
 @router.put("")
-def update_user(db: Session = Depends(database.get_db), current_user: schemas.User = Depends(oauth2.get_current_user)):
-    # TODO: add update function
-    pass
+def update_user(id: int, user: schemas.UserUpdate, db: Session = Depends(database.get_db), current_user: schemas.User = Depends(oauth2.get_current_user)):
+    db_user = db.get(models.User, id)
+    if not db_user:
+        raise HTTPException(status_code=404, detail="Vote not found")
+    if db_user.id == current_user.id:
+        user_data = user.dict(exclude_unset=True)
+        for key, value in user_data.items():
+            if key == "password":
+                value = Hash.bcrypt(value)
+            setattr(db_user, key, value)
+        db.add(db_user)
+        db.commit()
+        db.refresh(db_user)
+    return db_user
