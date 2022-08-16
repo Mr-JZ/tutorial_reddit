@@ -19,8 +19,24 @@ def get_tutorials_by_topic(db: Session, topic_id: int, level: int = None, skip: 
             models.Tutorial.topic_id == topic_id and models.Tutorial.level == level).offset(skip).limit(limit).all()
     return db.query(models.Tutorial).filter(models.Tutorial.topic_id == topic_id).offset(skip).limit(limit).all()
 
-def get_tutorials(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.Tutorial).offset(skip).limit(limit).all()
+def get_tutorials(db: Session, name: str = None, topic_id: int = None, level: int = None, skip: int = 0, limit: int = 100):
+    nameBool = False
+    topicBool = False
+    levelBool = False
+    if name is None:
+        nameBool = True
+        name = ""
+    if topic_id is None:
+        topicBool = True
+        topic_id = 0
+    if level is None:
+        levelBool = True
+        level = 0
+    return db.query(models.Tutorial).filter(
+        (models.Tutorial.name == name or nameBool) and
+        (models.Tutorial.topic_id == topic_id or topicBool) and
+        (models.Tutorial.level == level or levelBool)).offset(skip).limit(limit).all()
+
 # CREATE
 def create_tutorial(db: Session, tutorial: schemas.TutorialCreate, user_id: int):
     db_tutorial =  models.Tutorial(**tutorial.dict(), creator=user_id)

@@ -67,12 +67,7 @@ def get_tutorials(skip: Optional[int] = 0, limit: Optional[int] = 100, name: Opt
                   level: Optional[int] = None, topic_id: Optional[int] = None, db: Session = Depends(database.get_db),
                   ):
     tutorials : List[schemas.TutorialSchema] = []
-    if name:
-        db_tutorials = crud.get_tutorials_by_name(db, name=name,level=level, skip=skip, limit=limit)
-    elif topic_id:
-        db_tutorials = crud.get_tutorials_by_topic(db, topic_id=topic_id, level=level, skip=skip, limit=limit)
-    else:
-        db_tutorials = crud.get_tutorials(db, skip=skip, limit=limit)
+    db_tutorials = crud.get_tutorials(db, name=name, topic_id=topic_id, level=level, skip=skip, limit=limit)
     if db_tutorials is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Tutorials not found")
     else:

@@ -60,7 +60,7 @@ def delete_video(video_id: int, db: Session = Depends(database.get_db), current_
 def update_video(id: int, video: schemas.VideoUpdate, db: Session = Depends(database.get_db), current_user: schemas.User = Depends(oauth2.get_current_user)):
     db_video = db.get(models.Video, id)
     if not db_video:
-        raise HTTPException(status_code=404, detail="Vote not found")
+        raise HTTPException(status_code=404, detail="Video not found")
     if db_video.user_id == current_user.id:
         video_data = video.dict(exclude_unset=True)
         for key, value in video_data.items():
