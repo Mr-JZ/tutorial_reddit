@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session, joinedload
+from sqlalchemy import and_, or_
 from typing import Optional
 from api.tutorial import models, schemas
 
@@ -33,7 +34,10 @@ def get_tutorials(db: Session, name: str = None, topic_id: int = None, level: in
         levelBool = True
         level = 0
     print(f"INFO: tutorial.get_tutorials - name = {name}:{nameBool}; topic = {topic_id}:{topicBool}; levelBool = {level}:{levelBool}")
-    return db.query(models.Tutorial).filter((models.Tutorial.name == name or nameBool) and (models.Tutorial.topic_id == topic_id or topicBool) and (models.Tutorial.level == level or levelBool)).offset(skip).limit(limit).all()
+    return db.query(models.Tutorial).filter(and_(
+        or_(models.Tutorial.name.like(name), nameBool),
+        or_(models.Tutorial.topic_id == topic_id, topicBool),
+        or_(models.Tutorial.level == level, levelBool))).offset(skip).limit(limit).all()
 
 # CREATE
 def create_tutorial(db: Session, tutorial: schemas.TutorialCreate, user_id: int):
