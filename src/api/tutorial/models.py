@@ -41,7 +41,7 @@ class Tutorial(Base):
 
 class Topic(Base):
     __tablename__ = "topic"
-    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("user.id"), primary_key=True)
 
     name = Column(String, unique=True, index=True)
