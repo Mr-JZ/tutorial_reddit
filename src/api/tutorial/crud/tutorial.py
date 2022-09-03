@@ -32,6 +32,7 @@ def get_tutorials(db: Session, name: str = None, topic_id: int = None, level: in
     if level is None:
         levelBool = True
         level = 0
+    print(f"INFO: tutorial.get_tutorials - name = {name}:{nameBool}; topic = {topic_id}:{topicBool}; levelBool = {level}:{levelBool}")
     return db.query(models.Tutorial).filter(
         (models.Tutorial.name == name or nameBool) and
         (models.Tutorial.topic_id == topic_id or topicBool) and
