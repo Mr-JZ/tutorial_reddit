@@ -17,22 +17,22 @@ class Videos_Tutorial(Base):
     id = Column(Integer, primary_key=True, index=True)
 
     order = Column(Integer)
-    video_id = Column(Integer, ForeignKey("video.id"), primary_key=True)
-    tutorial_id = Column(Integer, ForeignKey("tutorial.id"), primary_key=True)
+    video_id = Column(Integer, ForeignKey("video.id"))
+    tutorial_id = Column(Integer, ForeignKey("tutorial.id"))
 
     tutorial = relationship("Tutorial", back_populates="videos")
     video = relationship("Video", back_populates="tutorials")
 
 class Tutorial(Base):
     __tablename__ = "tutorial"
-    id = Column(Integer, primary_key=True, index=True, )
+    id = Column(Integer, primary_key=True, index=True)
 
     name = Column(String, index=True)
     description = Column(String, index=True)
-    topic_id = Column(Integer, ForeignKey("topic.id"), primary_key=True)
+    topic_id = Column(Integer, ForeignKey("topic.id"))
     level = Column(Integer, index=True)
     # the creator
-    creator = Column(Integer, ForeignKey("user.id"), primary_key=True)
+    creator = Column(Integer, ForeignKey("user.id"))
 
     videos = relationship("Videos_Tutorial", back_populates="tutorial")
     topic = relationship("Topic", back_populates="tutorial")
@@ -42,7 +42,7 @@ class Tutorial(Base):
 class Topic(Base):
     __tablename__ = "topic"
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("user.id"), primary_key=True)
+    user_id = Column(Integer, ForeignKey("user.id"))
 
     name = Column(String, unique=True, index=True)
 
@@ -53,8 +53,8 @@ class Vote(Base):
     __tablename__ = "vote"
     id = Column(Integer, primary_key=True, index=True)
 
-    tutorial_id = Column(Integer, ForeignKey("tutorial.id"), primary_key=True)
-    user_id = Column(Integer, ForeignKey("user.id"), primary_key=True)
+    tutorial_id = Column(Integer, ForeignKey("tutorial.id"))
+    user_id = Column(Integer, ForeignKey("user.id"))
     up = Column(Boolean)
 
     tutorial = relationship("Tutorial", back_populates="votes")
