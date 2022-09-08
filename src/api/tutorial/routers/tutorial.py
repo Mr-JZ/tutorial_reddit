@@ -17,7 +17,7 @@ def create_tutorial(tutorial_schema: schemas.TutorialCreate, db: Session = Depen
 @router.post("/{tutorial_id}/video")
 def add_tutorial_video(id: int, tutorial_id: int, order: int, db: Session = Depends(database.get_db),
                     current_user: schemas.User = Depends(oauth2.get_current_user)):
-    return crud.add_video(db, tutorial_id=tutorial_id, Tutorial=id, order=order)
+    return crud.add_video(db, tutorial_id=tutorial_id, video_id=id, order=order)
 
 @router.put("/{tutorial_id}/video")
 def update_tutorial_video(id: int, tutorial_id: int, order: int, db: Session = Depends(database.get_db),
