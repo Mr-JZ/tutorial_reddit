@@ -69,7 +69,7 @@ def delete_tutorial(db: Session, tutorial_id: int):
 
 # Video adding
 def add_video(db: Session, tutorial_id: int, video_id: int, order: int):
-    db_video_tutorial = models.Videos_Tutorial(video_id=video_id, tutrial_id=tutorial_id, order=order)
+    db_video_tutorial = models.Videos_Tutorial(video_id=video_id, tutorial_id=tutorial_id, order=order)
     db.add(db_video_tutorial)
     db.commit()
     db.refresh(db_video_tutorial)
