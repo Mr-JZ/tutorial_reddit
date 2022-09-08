@@ -16,7 +16,7 @@ def create_video(video: schemas.VideoCreate, db: Session = Depends(database.get_
     db_video = crud.get_video_by_url(db, url=video.url)
     if db_video:
         return schemas.VideoSchema.from_orm(db_video)
-    return schemas.VideoSchema.from_orm(crud.create_video(db, video=video))
+    return schemas.VideoSchema.from_orm(crud.create_video(db, video=video, user_id=current_user.id))
 
 @router.get("", response_model=schemas.VideoSchema)
 def read_video(id: Optional[int] = None, url: Optional[str] = None, name: Optional[str] = None, db: Session = Depends(

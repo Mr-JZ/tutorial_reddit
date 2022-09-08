@@ -17,8 +17,8 @@ def get_videos_by_name(db: Session, name: str, skip: int = 0, limit: int = 100):
 def get_video_by_url(db: Session, url: str):
     return db.query(models.Video).filter(models.Video.url == url).first()
 # CREATE
-def create_video(db: Session, video: schemas.VideoCreate):
-    db_video = models.Video(**video.dict())
+def create_video(db: Session, video: schemas.VideoCreate, user_id: int):
+    db_video = models.Video(**video.dict(), user_id=user_id)
     db.add(db_video)
     db.commit()
     db.refresh(db_video)
