@@ -15,7 +15,7 @@ def create_video(video: schemas.VideoCreate, db: Session = Depends(database.get_
                  current_user: schemas.User = Depends(oauth2.get_current_user)):
     db_video = crud.get_video_by_url(db, url=video.url)
     if db_video:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Video exist already")
+        return schemas.VideoSchema.from_orm(db_video)
     return schemas.VideoSchema.from_orm(crud.create_video(db, video=video))
 
 @router.get("", response_model=schemas.VideoSchema)
