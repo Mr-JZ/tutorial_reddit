@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Create secrets.json
 cat <<EOL > secrets.json
