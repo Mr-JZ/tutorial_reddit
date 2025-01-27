@@ -31,6 +31,23 @@ We use the pricipal to up and down vote a post that is one or multiple videos in
 
 # Install
 
+## Create secrets.json and role.json
+
+If you have nix installed you can use the nix shell to create the files.
+```bash
+nix develop
+```
+
+If you don't have nix installed make sure you have `openssl` installed.
+
+After that you can just run the setup script.
+
+```bash
+./setup.sh
+```
+
+This will create the files `secrets.json` and `role.json` in the current directory.
+
 ## Docker 
 
 to build the image run in the project folder
